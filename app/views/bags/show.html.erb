@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @bag.weight %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @bag.cost %>
+</p>
+
+<!--<p>-->
+<!--  <strong>Confirmation Num:</strong>-->
+  <%#= @reservation.confirmation_num %>
+<!--</p>-->
+
+
+<%= link_to 'Edit', edit_bag_path(@bag) %> |
+<%= link_to 'Back', bags_path %>

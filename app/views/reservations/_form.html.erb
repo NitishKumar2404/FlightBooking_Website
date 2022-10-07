@@ -1,0 +1,65 @@
+<%= form_with(model: reservation) do |form| %>
+  <% if reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+        <% reservation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%# qty = @flight.capacity %>
+    <%= form.label :passengers_num %>
+    <%= form.number_field :passengers_num, :id => 'passengers_num', min: 1, max: 1000, onchange: "calculateTotalPrice();" %>
+  </div>
+
+  <!--  <div class="field">-->
+  <%# qty = @product.quantity %>
+  <%#= form.label :quantity %>
+  <%#= form.number_field :quantity, :id => 'quantity', min: 1, max: qty, onchange: "calculateTotalPrice();" %>
+  <!--  </div>-->
+
+  <div class="field">
+    <%= form.label :total_cost %>
+    <%= form.text_field :total_cost, :id => 'total_cost', :readonly => true %>
+  </div>
+
+  <!--  <div class="field">-->
+  <%#= form.label :confirmation_num %>
+  <%#= form.text_field :confirmation_num %>
+  <!--  </div>-->
+
+  <div class="field">
+    <%= form.label :category %>
+    <%#= form.text_field :category %>
+    <%= form.select :category, ["First", "Business", "Economy"]%>
+  </div>
+
+  <div class="field">
+    <%= form.label :amenities %>
+    <%#= form.text_field :amenities %>
+    <%= form.select :amenities, ["None", "Wifi", "Meal Preference", "Extra legroom"]%>
+  </div>
+
+  <div class="field">
+    <%#= form.label :flight_id, "flight" %>
+    <%#= form.collection_select :flight_id, Flight.all, :id, :flight_id %>
+    <%= form.hidden_field :flight_id, value: @flight.id %>
+    <%#= form.hidden_field :product_id, value: @product.id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Complete Booking" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+    function calculateTotalPrice() {
+        const price = "<%= @flight.cost %>";
+        document.getElementById('total_cost').value = document.getElementById('passengers_num').value * price;
+    }
+</script>

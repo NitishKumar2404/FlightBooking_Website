@@ -1,0 +1,19 @@
+<p id=”notice”><%= notice %></p>
+<h1>Flight Booking System</h1>
+<p>Book Flight tickets as fast as lightning</p>
+<% if current_user %>
+  Logged in as <%= current_user.name %>.
+  <%= link_to 'View all flights', flights_path %><br>
+  <%= link_to "Logout", logout_path %>
+<!--  <%#= link_to 'Add credit card', new_credit_card_path %><br>-->
+  <%= link_to 'View reservation history', reservations_path %><br>
+<!--  <%#= link_to 'Add or Remove Bag', update_bags_path %><br>-->
+  <% if current_user.email == "admin@ncsu.edu" %>
+    <%= link_to 'View all Users', users_path %> <br>
+    <%= link_to 'View all Bags', bags_path %> <br>
+  <% end %>
+<% else %>
+  <%= link_to "Signup", signup_path %> or
+  <%= link_to "Login", login_path %>
+  <% end %>
+

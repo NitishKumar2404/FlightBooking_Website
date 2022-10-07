@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reservations</h1>
+
+<% if is_admin? %>
+  <h4>Search by User ID </h4>
+    <%= form_tag(reservations_path, method: :get) do %>
+      <%= text_field_tag(:search_user_id, params[:search_user_id]) %>
+      <%= submit_tag("Search") %>
+    <% end %>
+  <% end %>
+
+<table>
+  <thead>
+  <tr>
+    <th>Passengers num</th>
+    <th>Confirmation num</th>
+    <th>Class</th>
+    <th>Amenities</th>
+    <th>Cost</th>
+    <th>Flight ID</th>
+    <th colspan="8"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @reservations.each do |reservation| %>
+    <tr>
+      <td><%= reservation.passengers_num %></td>
+      <td><%= reservation.confirmation_num %></td>
+      <td><%= reservation.category %></td>
+      <td><%= reservation.amenities %></td>
+      <td><%= reservation.cost %></td>
+      <td><%= reservation.flight_id %></td>
+      <td><%= link_to 'Show', reservation %></td>
+      <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
+      <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td>  |  </td>
+      <td><%= link_to 'Show Bags', bags_path %></td>
+      <td><%= link_to ' Add Bag', new_bag_path %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Reservation', new_reservation_path %>

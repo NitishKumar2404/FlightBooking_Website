@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Program2</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <% if current_user %>
+      <% if current_user.email == "admin@ncsu.edu" %>
+        Role: <u>Admin</u>
+      <% else %>
+        Role: <b>User</b>
+      <% end %>
+    <% end %>
+    <br>
+    <%= link_to 'Home page', root_path %>
+
+    <%= yield %>
+  </body>
+</html>

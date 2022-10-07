@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Flights</h1>
+
+<h4>Search by Source and Destination: </h4>
+  <%= form_tag(flights_path, method: :get) do %>
+    <%= text_field_tag(:search_source, params[:search_source]) %>
+    <%= text_field_tag(:search_destination, params[:search_destination]) %>
+  <%= submit_tag("Search") %>
+  <% end %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Flight</th>
+      <th>Category</th>
+      <th>Manufacturer</th>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Capacity</th>
+      <th>Status</th>
+      <th>Cost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @flights.each do |flight| %>
+
+
+      <tr>
+        <td><%= flight.name %></td>
+        <td><%= flight.flight_id %></td>
+        <td><%= flight.category %></td>
+        <td><%= flight.manufacturer %></td>
+        <td id = "source"><%= flight.source %></td>
+        <td><%= flight.destination %></td>
+        <td><%= flight.capacity %></td>
+        <td><%= flight.status %></td>
+        <td><%= flight.cost %></td>
+
+        <% if is_admin? %>
+          <td><%= link_to "Show this flight", flight %></td>
+          <td><%= link_to 'Edit', edit_flight_path(flight) %></td>
+          <td><%= link_to 'Destroy', flight, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+
+          <td><%= link_to_if flight.status == "Available", 'Make Reservation', new_reservation_path(:flight_id => flight.id) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+</tr>
+
+</tbody>
+</table>
+
+
+
+<% if is_admin? %>
+  <%= link_to "New flight", new_flight_path %>
+<% end %>

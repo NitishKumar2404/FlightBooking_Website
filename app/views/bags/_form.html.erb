@@ -1,0 +1,53 @@
+<%= form_with(model: bag) do |form| %>
+  <% if bag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bag.errors.count, "error") %> prohibited this bag from being saved:</h2>
+
+      <ul>
+        <% bag.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!--  <div class="field">-->
+  <%#= form.label :bag_id %>
+  <%#= form.text_field :bag_id %>
+  <!--  </div>-->
+
+
+  <div class="field">
+    <%= form.label :weight %>
+    <%= form.number_field :weight, :id =>'weight', min: 0, max: 200, onchange:"calculateTotalPrice();" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.text_field :cost, :id => 'cost', :readonly => true %>
+  </div>
+
+  <div class="field">
+    <%#= form.hidden_field :reservation_id, .id %>
+    <% form.label :reservation_id, 'Confirmation Num' %>
+    <%#= form.text_field :confirmation_num, :id=>'Confirmation Num', :readonly => true %>
+    <%#= form.collection_select :reservation_id, Reservation.where(user_id: current_user.id), :id, :id %>
+    <%= form.collection_select :reservation_id, Reservation.where(user_id: current_user.id), :id, :confirmation_num %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  <script type="text/javascript">
+      function calculateTotalPrice() {
+          const price = 4;
+          document.getElementById('cost').value = document.getElementById('weight').value * price;
+      }
+  </script>
+
+<% end %>
